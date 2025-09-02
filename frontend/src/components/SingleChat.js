@@ -40,7 +40,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
-
     try {
       const config = {
         headers: {
@@ -116,7 +115,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     fetchMessages();
-
+    // so we can compare it and accordingly we can decide that if we are supposed to emit the message 
+    // or if we are supposed to give the notification to the user 
     selectedChatCompare = selectedChat;
     // eslint-disable-next-line
   }, [selectedChat]);
@@ -139,9 +139,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
-
     if (!socketConnected) return;
-
     if (!typing) {
       setTyping(true);
       socket.emit("typing", selectedChat._id);
@@ -220,7 +218,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <ScrollableChat messages={messages} />
               </div>
             )}
-
             <FormControl
               onKeyDown={sendMessage}
               id="first-name"

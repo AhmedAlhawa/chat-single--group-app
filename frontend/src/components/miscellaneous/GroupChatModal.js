@@ -50,7 +50,6 @@ const GroupChatModal = ({ children }) => {
     if (!query) {
       return;
     }
-
     try {
       setLoading(true);
       const config = {
@@ -59,7 +58,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
+      console.log('data after search for group  : ',data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -73,11 +72,9 @@ const GroupChatModal = ({ children }) => {
       });
     }
   };
-
   const handleDelete = (delUser) => {
     setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
   };
-
   const handleSubmit = async () => {
     if (!groupChatName || !selectedUsers) {
       toast({
@@ -174,7 +171,7 @@ const GroupChatModal = ({ children }) => {
                 .map((user) => (
                   <UserListItem
                     key={user._id}
-                    user={user}
+                    userMember={user}
                     handleFunction={() => handleGroup(user)}
                   />
                 ))

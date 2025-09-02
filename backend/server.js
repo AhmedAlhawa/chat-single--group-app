@@ -7,6 +7,7 @@ const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
 
+
 dotenv.config();
 connectDB();
 const app = express();
@@ -20,7 +21,6 @@ app.use(express.json()); // to accept json data
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
-
 // --------------------------deployment------------------------------
 
 const __dirname1 = path.resolve();
@@ -38,12 +38,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // --------------------------deployment------------------------------
-
 // Error Handling middlewares
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;
+// const PORT = 5000;
 
 const server = app.listen(
   PORT,
@@ -65,10 +65,12 @@ io.on("connection", (socket) => {
     socket.emit("connected");
   });
 
+  // when you click on any chat 
   socket.on("join chat", (room) => {
     socket.join(room);
     console.log("User Joined Room: " + room);
   });
+
   socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 

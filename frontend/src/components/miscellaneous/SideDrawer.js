@@ -70,7 +70,6 @@ function SideDrawer() {
 
     try {
       setLoading(true);
-
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -78,7 +77,7 @@ function SideDrawer() {
       };
 
       const { data } = await axios.get(`/api/user?search=${search}`, config);
-
+      console.log('data after search : ',data)
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -94,8 +93,6 @@ function SideDrawer() {
   };
 
   const accessChat = async (userId) => {
-    console.log(userId);
-
     try {
       setLoadingChat(true);
       const config = {
@@ -210,7 +207,7 @@ function SideDrawer() {
               searchResult?.map((user) => (
                 <UserListItem
                   key={user._id}
-                  user={user}
+                  userMember={user}
                   handleFunction={() => accessChat(user._id)}
                 />
               ))
